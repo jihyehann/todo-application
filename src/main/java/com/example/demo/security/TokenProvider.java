@@ -38,12 +38,16 @@ public class TokenProvider {
     }
 
     public String validateAndGetUserId(String token) {
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
 
-        return claims.getSubject();
+            return claims.getSubject();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
